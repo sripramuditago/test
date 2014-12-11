@@ -1,0 +1,98 @@
+LISTVIEW 
+
+1. Buat project baru
+	- project name DosenStikom
+2. Di project DosenStikom
+	- klik kanan > new > folder > bahan
+	- copy dosen.txt
+3. Di project DosenStikom > Res > values > strings.xml
+4. nilai text hello word pada activity_main.xml diakses dari strings.xml
+5. Nama Dosen disimpan ke strings.xml
+	- ketikkan :
+		<string-array>
+			<item>MARTONO, M. KOM</item>
+			<item>BENY, S. KOM, M.SC</item>
+			<item>ALI SADIKIN, S. KOM, M.S.I</item>
+			<item>ERICK FERNANDO, S. KOM, M.S.I</item>
+		</string-array>
+	NB : database versi kecil menggunakan array
+6. Di project DosenStikom > Res > layout > composite > list view
+	JANGAN LUPA DI SAVE TERLEBIH DAHULU 
+7. kembali ke string.xml
+	- pada bagian <string-array>
+		tambahkan nama : <string-array="daftar_dosen">
+		penggunaan "_" merupakan ketentuan dalam pemberian nama
+8. Pada layout > klik kanan > new > android xml file > linear layout > beri nama (item_layout) > finish 
+9. item_layout.xml > form widgets > medium text 
+	- Mengatur jarak dan warna
+		text color : #000000
+		view > padding top : 20 dp
+		     > padding bottom : 20 dp
+	NB : menampilkan item sesuai jumlah data yang ada
+10. DosenStikom > src > com.SriMelrizah.dosenstikom . klik kanan> new activity > activity name (DetailActivity)
+11. Activity_detail > form widgets > medium text > text view 
+	- medium text : 
+		- text : nama dosen
+	-text view :
+		- text : mata kuliah
+
+ 	JANGAN LUPA DI SAVE TERLEBIH DAHULU 
+12. Buka MainActivity.java 
+	Ketikkan dibawah public class Main Activity (line 9)
+	
+	pada line 11
+	//deklarasi variabel
+	ListView listViewSaya;
+	
+	Ketikkan didalam protected void onCreate (line 15)
+	Pada line 18
+	//dapatkan listview
+	listViewSaya = (ListView) findViewById(R.id.listwview1);
+
+	//dapatkan string array
+	String[] namaDosen = getResources()
+	.getStringArray(R.Array.daftar_dosen);
+
+	//buat adapter
+	ArrayAdapter<String> ad = new ArrayAdapter<String>(getApplicationContext(), R.layout.item_layout, R.id.textview1, namaDosen);
+	
+
+	//set adapter ke list view
+	listViewSaya.setAdapter(ad);
+
+	//memberikan fungsi klik pada item 
+	listViewSaya.setOnItemClickListener(new OnitemClickListener(){
+		
+	Pada @override
+	public void onItemClick{
+	
+	// TODO Auto-generated method stub
+	String nama = parent.getItemAtPosition(position).toString();
+	Intent i = new Intent(getApplicationContext(),DetailActivity.class);
+	i.putExtra("namaDosen", nama);
+	startActivity(i); 
+		}
+	});
+
+	NB : tambahkan titik koma 
+
+	arahkan mouse ke new OnitemClickListener pilih import 
+	arahkan mouse ke new OnitemClickListener pilih add 
+
+13. DosenStikom > src > com.SriMelrizah.dosenstikom > buka DetailActicity.java 
+	Diantara oncreate ketikkan :
+
+	protected void onResume(){
+	//TODO:auto-generated method stub
+	super.onResume();
+	Intent i = getIntent(); // dapatkan intent
+	Bundle b = i.getExtras(); // ambil extras
+	String nama = b.getString("namaDosen"); // akss namaDosen
+	namaTxt.setText(nama); // set text menjadi nama dosen
+	}
+
+	
+
+
+	
+	
